@@ -1,0 +1,166 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5hgdbunc7lqi"]
+
+[ext_resource type="Script" path="res://Interface.gd" id="1_1vll7"]
+
+[node name="Control" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1vll7")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+custom_minimum_size = Vector2(750, 600)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+ratio = 0.8
+
+[node name="Panel" type="Panel" parent="AspectRatioContainer"]
+layout_mode = 2
+
+[node name="TextInput" type="LineEdit" parent="AspectRatioContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 221.0
+offset_top = -56.0
+offset_right = -216.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/caret_color = Color(0, 0, 0, 0)
+alignment = 1
+context_menu_enabled = false
+selecting_enabled = false
+drag_and_drop_selection_enabled = false
+flat = true
+
+[node name="FarLeft" type="Label" parent="AspectRatioContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.052
+anchor_top = 1.0
+anchor_right = 0.17
+anchor_bottom = 1.0
+offset_left = -0.1968
+offset_top = -91.0
+offset_right = -14.128
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Far Left"
+horizontal_alignment = 1
+
+[node name="MidLeft" type="Label" parent="AspectRatioContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.233
+anchor_top = 1.0
+anchor_right = 0.339
+anchor_bottom = 1.0
+offset_left = 0.252792
+offset_top = -91.0
+offset_right = -0.0175934
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Mid Left
+"
+horizontal_alignment = 1
+
+[node name="MidRight" type="Label" parent="AspectRatioContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.643
+anchor_top = 1.0
+anchor_right = 0.759
+anchor_bottom = 1.0
+offset_left = 0.508789
+offset_top = -94.0
+offset_right = -0.14563
+offset_bottom = -71.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Mid Right
+"
+horizontal_alignment = 1
+
+[node name="FarRight" type="Label" parent="AspectRatioContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.836
+anchor_top = 1.0
+anchor_right = 0.947
+anchor_bottom = 1.0
+offset_left = 0.297546
+offset_top = -96.0
+offset_right = -0.164795
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Far Right
+"
+horizontal_alignment = 1
+
+[node name="Shoot" type="Label" parent="AspectRatioContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.447
+anchor_top = 1.0
+anchor_right = 0.552
+anchor_bottom = 1.0
+offset_left = -0.164825
+offset_top = -111.0
+offset_right = -0.134338
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Shoot"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="AspectRatioContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.186
+anchor_right = 0.186
+anchor_bottom = 1.0
+offset_left = 9.4576
+offset_top = 93.0
+offset_right = 13.4576
+offset_bottom = -146.0
+
+[node name="VSeparator2" type="VSeparator" parent="AspectRatioContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.491
+anchor_right = 0.491
+anchor_bottom = 1.0
+offset_left = -2.25443
+offset_top = 96.0
+offset_right = 1.74557
+offset_bottom = -143.0
+
+[node name="VSeparator3" type="VSeparator" parent="AspectRatioContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.762
+anchor_right = 0.766
+anchor_bottom = 1.0
+offset_left = -4.46085
+offset_top = 107.0
+offset_right = -0.0144348
+offset_bottom = -132.0
+
+[connection signal="text_changed" from="AspectRatioContainer/Panel/TextInput" to="." method="_on_text_input_text_changed"]

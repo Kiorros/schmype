@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://fpveolbslukv"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_654pa"]
+[ext_resource type="PackedScene" uid="uid://b5hgdbunc7lqi" path="res://Interface.tscn" id="1_uiiaw"]
+[ext_resource type="Script" path="res://WordProvider.gd" id="3_ah7fi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_a3own"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3lgt3"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_31tmv"]
+emission_shape_scale = Vector3(7, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 0, 20)
+spread = 1.0
+initial_velocity_min = 0.4
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.25
+
+[sub_resource type="QuadMesh" id="QuadMesh_0sdgm"]
+orientation = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fxpdm"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_654pa")
+
+[node name="Interface" parent="." instance=ExtResource("1_uiiaw")]
+
+[node name="WordProvider" type="Node" parent="Interface"]
+script = ExtResource("3_ah7fi")
+
+[node name="Player" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("BoxMesh_a3own")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("BoxShape3D_3lgt3")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 20, 4.3)
+fov = 30.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.475547, 0.87969, 0, -0.87969, 0.475547, 0, 7.93081, 6.96614)
+
+[node name="StarParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(2.84801, 0, 0, 0, 1, 0, 0, 0, 4.92544, 0, -7.32822, -17.2479)
+amount = 50
+lifetime = 15.0
+preprocess = 15.0
+visibility_aabb = AABB(-4, -4, 0, 8, 8, 8)
+process_material = SubResource("ParticleProcessMaterial_31tmv")
+draw_pass_1 = SubResource("QuadMesh_0sdgm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(12, 0, 0, 0, 5, 0, 0, 0, 7, 0, 0, -2.5)
+mesh = SubResource("PlaneMesh_fxpdm")
+
+[connection signal="column_changed" from="Interface" to="." method="_on_interface_column_changed"]
+[connection signal="shoot" from="Interface" to="." method="_on_interface_shoot"]
