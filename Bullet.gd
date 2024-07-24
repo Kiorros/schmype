@@ -1,12 +1,9 @@
 extends Node3D
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if $Damage:
+		$Damage.on_damage_dealt.connect(_on_damage_dealt)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	#position = position + Vector3(0, 0, delta)
-	pass
+func _on_damage_dealt(amount, target):
+	print("Bullet did some damage!")
+	queue_free()

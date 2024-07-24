@@ -9,15 +9,12 @@ func _ready():
 	db.path = "res://dictionary_en.db"
 	db.read_only = true
 	db.open_db()
-	
-	#db.query_with_bindings("select word from entries limit 10", [])
-	print(get_random_word_selection())
 
 func get_random_word_selection() -> Array[String]:
 	db.query("select max(rowid) from entries")
 	var total = db.query_result[0]["max(rowid)"]
 	var bindings = [randi_range(0, total), randi_range(0, total), randi_range(0, total), randi_range(0, total), randi_range(0, total)]
-	db.query_with_bindings("select word from entries where rowid in (?)", bindings)
+	db.query_with_bindings("select word from entries where rowid in (?, ?, ?, ?, ?)", bindings)
 	var results: Array[String] = [] 
 	for item in db.query_result: #.map(func(el): return el["word"])
 		results.append(item["word"])

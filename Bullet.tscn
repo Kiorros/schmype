@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cug3aguk7j87w"]
+[gd_scene load_steps=6 format=3 uid="uid://cug3aguk7j87w"]
 
 [ext_resource type="Script" path="res://Bullet.gd" id="1_8jfh6"]
+[ext_resource type="Script" path="res://Damage.gd" id="2_r6rx7"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_gwo6h"]
 radius = 0.2
@@ -11,7 +12,7 @@ albedo_color = Color(0.856494, 3.65794e-06, 8.66354e-07, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5g20u"]
 
-[node name="Bullet" type="StaticBody3D"]
+[node name="Bullet" type="Area3D"]
 script = ExtResource("1_8jfh6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -21,3 +22,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_rlqtp")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 shape = SubResource("SphereShape3D_5g20u")
+
+[node name="Damage" type="Node" parent="."]
+script = ExtResource("2_r6rx7")
