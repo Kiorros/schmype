@@ -1,11 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bi3fm43yq3epg"]
+[gd_scene load_steps=3 format=3 uid="uid://bi3fm43yq3epg"]
 
-[ext_resource type="FontFile" uid="uid://b4ke0u00bxcc2" path="res://Fonts/ArchivoBlack.ttf" id="1_kevof"]
 [ext_resource type="Script" path="res://Intro.gd" id="1_w5jw1"]
-
-[sub_resource type="Theme" id="Theme_rnjsi"]
-default_font = ExtResource("1_kevof")
-default_font_size = 160
+[ext_resource type="Theme" uid="uid://d3spkfde736ah" path="res://Themes/TitleTheme.tres" id="2_cteo6"]
 
 [node name="Intro" type="CenterContainer"]
 anchors_preset = 15
@@ -17,6 +13,6 @@ script = ExtResource("1_w5jw1")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
-theme = SubResource("Theme_rnjsi")
+theme = ExtResource("2_cteo6")
 text = "SCHMYPE
 "

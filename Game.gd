@@ -3,18 +3,19 @@ extends Node3D
 var bullet_scene = preload("res://Bullet.tscn")
 var enemy_scene = preload("res://Enemy.tscn")
 
-@export var arena_scale = 2.3
+@export var arena_scale = 2.45
 @export var travel_time = 0.15
 
 var player_tween
 var columns: Array[int] = [0, 1, 2, 3]
 
+#TEMP - move to a stage specific scene
 var progress_counter = 0
 var order = columns
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_on_interface_column_changed(1)
+	$Player.position = Vector3(get_x_for_column(1), 0, 0)
 	_on_health_damage_taken(0)
 	
 	var wave_timer = Timer.new()
@@ -85,5 +86,13 @@ func _on_health_damage_taken(amount):
 
 
 func _on_health_health_zero():
-	get_tree().paused = true
-	print("GAME OVER")
+	var game_over = load("res://GameOver.tscn").instantiate()
+	add_child(game_over)
+	#TODO: Pause enemies/stop spawining how waves/stop collision detection
+	#$Player.set_collision_layer_value(2, false)
+	$Interface.commands_enabled = false
+
+
+func _on_interface_command_error():
+	$Player/Health.damage(1)
+	$ErrorPlayer.play()

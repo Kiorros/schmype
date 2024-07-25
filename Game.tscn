@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://fpveolbslukv"]
+[gd_scene load_steps=16 format=3 uid="uid://fpveolbslukv"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_654pa"]
 [ext_resource type="PackedScene" uid="uid://b5hgdbunc7lqi" path="res://Interface.tscn" id="1_uiiaw"]
@@ -7,13 +7,14 @@
 [ext_resource type="Script" path="res://Damage.gd" id="5_vj54b"]
 [ext_resource type="AudioStream" uid="uid://cwpa5luhthtm1" path="res://Sounds/LaserShoot.wav" id="6_jrpu8"]
 [ext_resource type="Texture2D" uid="uid://c6uxsq02w1chp" path="res://Sprites/Stars.png" id="7_ymly0"]
+[ext_resource type="AudioStream" uid="uid://cks8mm2rjakwa" path="res://Sounds/Error.wav" id="8_7g6rl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_a3own"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3lgt3"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_31tmv"]
-emission_shape_scale = Vector3(7, 1, 1)
+emission_shape_scale = Vector3(5, 1, 1)
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
 direction = Vector3(0, 0, 15)
@@ -37,7 +38,12 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_0sdgm"]
 material = SubResource("StandardMaterial3D_6s7lv")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8uaac"]
+shading_mode = 0
+albedo_color = Color(0.151276, 0.151276, 0.151276, 1)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_fxpdm"]
+material = SubResource("StandardMaterial3D_8uaac")
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_654pa")
@@ -76,7 +82,7 @@ fov = 30.0
 transform = Transform3D(1, 0, 0, 0, 0.475547, 0.87969, 0, -0.87969, 0.475547, 0, 7.93081, 6.96614)
 
 [node name="StarParticles" type="GPUParticles3D" parent="."]
-transform = Transform3D(2.84801, 0, 0, 0, 1, 0, 0, 0, 4.92544, 0, -7.32822, -17.2479)
+transform = Transform3D(2.84801, 0, 0, 0, 1, 0, 0, 0, 4.92544, 0, -7.32822, -20.7226)
 amount = 60
 lifetime = 15.0
 preprocess = 15.0
@@ -89,7 +95,38 @@ transform = Transform3D(12, 0, 0, 0, 5, 0, 0, 0, 7, 0, 0, -2.5)
 visible = false
 mesh = SubResource("PlaneMesh_fxpdm")
 
+[node name="Overlay" type="Node3D" parent="."]
+
+[node name="RightBumper" type="MeshInstance3D" parent="Overlay"]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 10, 10, 0, 0)
+mesh = SubResource("PlaneMesh_fxpdm")
+skeleton = NodePath("../..")
+
+[node name="LeftBumper" type="MeshInstance3D" parent="Overlay"]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 10, -10, 0, 0)
+mesh = SubResource("PlaneMesh_fxpdm")
+skeleton = NodePath("../..")
+
+[node name="CenterGuideLine" type="MeshInstance3D" parent="Overlay"]
+transform = Transform3D(0.015, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, -5)
+mesh = SubResource("PlaneMesh_fxpdm")
+skeleton = NodePath("../..")
+
+[node name="RightGuideLine" type="MeshInstance3D" parent="Overlay"]
+transform = Transform3D(0.015, 0, 0, 0, 1, 0, 0, 0, 4, 2.5, 0, -5)
+mesh = SubResource("PlaneMesh_fxpdm")
+skeleton = NodePath("../..")
+
+[node name="LeftGuideLine" type="MeshInstance3D" parent="Overlay"]
+transform = Transform3D(0.015, 0, 0, 0, 1, 0, 0, 0, 4, -2.5, 0, -5)
+mesh = SubResource("PlaneMesh_fxpdm")
+skeleton = NodePath("../..")
+
+[node name="ErrorPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_7g6rl")
+
 [connection signal="column_changed" from="Interface" to="." method="_on_interface_column_changed"]
+[connection signal="command_error" from="Interface" to="." method="_on_interface_command_error"]
 [connection signal="shoot" from="Interface" to="." method="_on_interface_shoot"]
 [connection signal="damage_taken" from="Player/Health" to="." method="_on_health_damage_taken"]
 [connection signal="health_zero" from="Player/Health" to="." method="_on_health_health_zero"]

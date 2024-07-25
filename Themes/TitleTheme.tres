@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d3spkfde736ah"]
+
+[ext_resource type="FontFile" uid="uid://b4ke0u00bxcc2" path="res://Fonts/ArchivoBlack.ttf" id="1_wxyhj"]
+
+[resource]
+default_font = ExtResource("1_wxyhj")
+default_font_size = 160

@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" path="res://Interface.gd" id="1_1vll7"]
 [ext_resource type="Script" path="res://CommandLabel.gd" id="2_ahtn5"]
-[ext_resource type="AudioStream" uid="uid://cks8mm2rjakwa" path="res://Sounds/Error.wav" id="3_man7s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e7crp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yc7tb"]
 bg_color = Color(0.463666, 0, 0.168347, 1)
@@ -26,6 +27,7 @@ ratio = 0.8
 
 [node name="Panel" type="Panel" parent="AspectRatioContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_e7crp")
 
 [node name="TextInput" type="LineEdit" parent="AspectRatioContainer/Panel"]
 unique_name_in_owner = true
@@ -159,6 +161,7 @@ shortcut_keys_enabled = false
 script = ExtResource("2_ahtn5")
 
 [node name="VSeparator" type="VSeparator" parent="AspectRatioContainer/Panel"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.186
@@ -170,6 +173,7 @@ offset_right = 13.4576
 offset_bottom = -146.0
 
 [node name="VSeparator2" type="VSeparator" parent="AspectRatioContainer/Panel"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.491
@@ -181,6 +185,7 @@ offset_right = 1.74557
 offset_bottom = -143.0
 
 [node name="VSeparator3" type="VSeparator" parent="AspectRatioContainer/Panel"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.762
@@ -205,8 +210,5 @@ offset_right = -10.0032
 offset_bottom = -30.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_yc7tb")
 show_percentage = false
-
-[node name="ErrorPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_man7s")
 
 [connection signal="text_changed" from="AspectRatioContainer/Panel/TextInput" to="." method="_on_text_input_text_changed"]

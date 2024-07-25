@@ -2,6 +2,9 @@ extends Control
 
 signal column_changed(index: int)
 signal shoot()
+signal command_error()
+
+@export var commands_enabled: bool = true
 
 @onready var input = %TextInput
 @onready var column_labels = [%FarLeft, %MidLeft, %MidRight, %FarRight]
@@ -21,6 +24,10 @@ func _input(event):
 	pass
 
 func _on_text_input_text_changed(text):
+	if !commands_enabled:
+		input.text = last_good_input
+		return
+		
 	var partial_match = false
 	for label in all_labels:
 		label.set_typed_text(text)
@@ -40,12 +47,15 @@ func _on_text_input_text_changed(text):
 	if !partial_match:
 		input.text = last_good_input
 		input.caret_column = last_good_input.length()
-		$ErrorPlayer.play()
+		if last_good_input:
+			_on_text_input_text_changed(last_good_input)
+		command_error.emit()
 	else:
 		last_good_input = text
 
 func reset(label: CommandLabel):
 	input.text = ''
+	last_good_input = ''
 	update_word(label)
 
 func update_word(label: CommandLabel):
