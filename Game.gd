@@ -1,39 +1,47 @@
 extends Node3D
 
 var bullet_scene = preload("res://Bullet.tscn")
-var enemy_scene = preload("res://Enemy.tscn")
 
 @export var arena_scale = 2.45
 @export var travel_time = 0.15
 
+var stage: BaseStage
+
 var player_tween
+var player_column: int = 1
 var columns: Array[int] = [0, 1, 2, 3]
 
-#TEMP - move to a stage specific scene
-var progress_counter = 0
-var order = columns
+var game_active: bool = false
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
-	$Player.position = Vector3(get_x_for_column(1), 0, 0)
-	_on_health_damage_taken(0)
-	
-	var wave_timer = Timer.new()
-	wave_timer.wait_time = 3.0
-	wave_timer.one_shot = false
-	wave_timer.autostart = true
-	wave_timer.connect("timeout", _on_wave_timer_timeout)
-	add_child(wave_timer)
+	set_current_stage("res://Stages/StageA.tscn")
+	$Player.position = Vector3(stage.get_x_for_column(player_column), 0, 0)
+	_on_player_damage_taken(0, self)
+	set_active(true)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
+func set_active(value: bool):
+	game_active = value
+	if stage:
+		stage.set_active(value)
+
+func set_current_stage(path: String):
+	stage = load(path).instantiate()
+	stage.arena_scale = arena_scale
+	stage.active = game_active
+	add_child(stage)
 
 func _on_interface_column_changed(col: int):
+	if !game_active:
+		return
+	
+	player_column = col
 	if player_tween:
 		player_tween.kill()
-	var target = get_x_for_column(col)
+	var target = stage.get_x_for_column(col)
 	var distance = abs($Player.position.x - target)
 	var time = (distance / arena_scale) * travel_time
 	player_tween = create_tween()
@@ -41,8 +49,10 @@ func _on_interface_column_changed(col: int):
 	player_tween.set_trans(Tween.TRANS_QUART)
 	player_tween.set_ease(Tween.EASE_IN)
 
-
 func _on_interface_shoot():
+	if !game_active:
+		return
+		
 	var new_bullet = bullet_scene.instantiate()
 	var initial = $Player.position + Vector3(0, 0, -0.5)
 	var target = initial + Vector3(0, 0, -10)
@@ -54,45 +64,32 @@ func _on_interface_shoot():
 	$Player/AttackSoundPlayer.play()
 
 
-func _on_wave_timer_timeout():
-	var wave_type = progress_counter % 5;
-	if wave_type == 4:
-		for col in columns:
-			spawn_enemy(col)
-		order.shuffle()
-	else:
-		spawn_enemy(order[wave_type])
-	progress_counter = progress_counter + 1
-
-func get_x_for_column(col: int):
-	return (col - 1.5) * arena_scale
-	
-
-func spawn_enemy(col: int):
-	var enemy = enemy_scene.instantiate()
-	var initial = Vector3(get_x_for_column(col), 0, -10.5)
-	var target = initial + Vector3(0, 0, 14)
-	enemy.position = initial
-	add_child(enemy)
-	var tween = create_tween()
-	tween.tween_property(enemy, "position", target, 8).set_trans(Tween.TRANS_LINEAR)
-	tween.tween_callback(enemy.queue_free)
-
-
-func _on_health_damage_taken(amount):
+func _on_player_damage_taken(amount, source):
 	var health_bar = $Interface/AspectRatioContainer/Panel/HealthBar
 	health_bar.max_value = $Player/Health.max_health
 	health_bar.value = $Player/Health.value
-
-
-func _on_health_health_zero():
+	
+	# If the player is collided with, also destroy the source
+	print("Player dealt " + str(amount) + " damage by " + source.name)
+	print(source.has_node("Health"))
+	if source.has_node("Health"):
+		source.get_node("Health").damage(9999999, $Player)
+	
+func _on_player_destroyed():
+	SoundManager.play_explosion()
 	var game_over = load("res://GameOver.tscn").instantiate()
 	add_child(game_over)
 	#TODO: Pause enemies/stop spawining how waves/stop collision detection
 	#$Player.set_collision_layer_value(2, false)
+	game_active = false
 	$Interface.commands_enabled = false
 
-
 func _on_interface_command_error():
-	$Player/Health.damage(1)
+	$Player/Health.damage(1, self)
 	$ErrorPlayer.play()
+
+func _on_interface_command_key_press():
+	$KeyPressPlayer.play()
+
+func _on_active_region_area_exited(area):
+	area.queue_free()

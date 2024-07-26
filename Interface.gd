@@ -3,6 +3,7 @@ extends Control
 signal column_changed(index: int)
 signal shoot()
 signal command_error()
+signal command_key_press()
 
 @export var commands_enabled: bool = true
 
@@ -52,6 +53,7 @@ func _on_text_input_text_changed(text):
 		command_error.emit()
 	else:
 		last_good_input = text
+		command_key_press.emit()
 
 func reset(label: CommandLabel):
 	input.text = ''

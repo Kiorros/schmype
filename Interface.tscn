@@ -7,6 +7,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yc7tb"]
 bg_color = Color(0.463666, 0, 0.168347, 1)
+border_color = Color(0.381703, 0.381703, 0.381703, 1)
 
 [node name="Control" type="HBoxContainer"]
 anchors_preset = 15
@@ -159,42 +160,6 @@ fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 script = ExtResource("2_ahtn5")
-
-[node name="VSeparator" type="VSeparator" parent="AspectRatioContainer/Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.186
-anchor_right = 0.186
-anchor_bottom = 1.0
-offset_left = 9.4576
-offset_top = 93.0
-offset_right = 13.4576
-offset_bottom = -146.0
-
-[node name="VSeparator2" type="VSeparator" parent="AspectRatioContainer/Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.491
-anchor_right = 0.491
-anchor_bottom = 1.0
-offset_left = -2.25443
-offset_top = 96.0
-offset_right = 1.74557
-offset_bottom = -143.0
-
-[node name="VSeparator3" type="VSeparator" parent="AspectRatioContainer/Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.762
-anchor_right = 0.766
-anchor_bottom = 1.0
-offset_left = -4.46085
-offset_top = 107.0
-offset_right = -0.0144348
-offset_bottom = -132.0
 
 [node name="HealthBar" type="ProgressBar" parent="AspectRatioContainer/Panel"]
 unique_name_in_owner = true

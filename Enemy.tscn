@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cd1vyoivixr6c"]
+[gd_scene load_steps=8 format=3 uid="uid://cd1vyoivixr6c"]
 
 [ext_resource type="Script" path="res://Enemy.gd" id="1_x8i4x"]
 [ext_resource type="Script" path="res://Damage.gd" id="2_0bl5j"]
 [ext_resource type="Script" path="res://Health.gd" id="3_ydgrp"]
 [ext_resource type="Script" path="res://Destructible.gd" id="4_equfe"]
-[ext_resource type="AudioStream" uid="uid://dqjk3jkvedlwa" path="res://Sounds/Explosion.wav" id="5_wbk6j"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_57rap"]
 
@@ -34,8 +33,3 @@ max_health = 2
 
 [node name="Destructible" type="Node" parent="."]
 script = ExtResource("4_equfe")
-
-[node name="ExplosionPlayer" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("5_wbk6j")
-
-[connection signal="on_damage_dealt" from="Damage" to="." method="_on_damage_on_damage_dealt"]

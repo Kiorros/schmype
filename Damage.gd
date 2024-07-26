@@ -11,8 +11,9 @@ func _ready():
 		parent.area_entered.connect(_on_parent_area_entered)
 		
 func _on_parent_area_entered(area):
+	#print(get_node("..").name + " entered area " + area.name)
 	if area.has_node("Health"):
 		var target_health = area.get_node("Health")
-		var dealt = target_health.damage(value)
-		#print("Dealt " + str(dealt) + " damage to " + str(area))
+		var dealt = target_health.damage(value, get_parent())
+		#print("Dealing " + str(value) + " (" + str(dealt) + ") damage to " + area.name)
 		on_damage_dealt.emit(dealt, area)

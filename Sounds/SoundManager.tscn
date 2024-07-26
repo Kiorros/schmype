@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxe7fvbxdy7qs"]
+
+[ext_resource type="AudioStream" uid="uid://dqjk3jkvedlwa" path="res://Sounds/Explosion.wav" id="1_g0km6"]
+[ext_resource type="Script" path="res://Sounds/SoundManager.gd" id="1_ib47t"]
+
+[node name="SoundManager" type="Node"]
+script = ExtResource("1_ib47t")
+
+[node name="ExplosionPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_g0km6")
+volume_db = -8.0
