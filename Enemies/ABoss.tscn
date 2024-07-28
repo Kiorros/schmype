@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://d2vv8svjtfij5"]
+
+[ext_resource type="Script" path="res://Health.gd" id="1_7tln2"]
+[ext_resource type="Script" path="res://Damage.gd" id="2_npx68"]
+[ext_resource type="Script" path="res://Destructible.gd" id="3_3irgk"]
+[ext_resource type="Script" path="res://Behaviors/Special/ABoss.gd" id="4_q74di"]
+[ext_resource type="PackedScene" uid="uid://cwfhbtqhc81mj" path="res://Components/Thruster.tscn" id="5_olh5i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w4to1"]
+size = Vector3(1, 1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fmurk"]
+size = Vector3(1, 1, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6j7xj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_852v8"]
+
+[node name="ABoss" type="Area3D"]
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("1_7tln2")
+
+[node name="Damage" type="Node" parent="."]
+script = ExtResource("2_npx68")
+
+[node name="Destructible" type="Node" parent="."]
+script = ExtResource("3_3irgk")
+
+[node name="Behavior" type="Node" parent="."]
+script = ExtResource("4_q74di")
+
+[node name="CollisionShapeLeft" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 1, 0, 0)
+shape = SubResource("BoxShape3D_w4to1")
+
+[node name="CollisionShapeRight" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -1, 0, 0)
+shape = SubResource("BoxShape3D_fmurk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.939693, 0, -1.7101, 0, 1, 0, 0.34202, 0, 4.69846, 1, 0, 0)
+mesh = SubResource("BoxMesh_6j7xj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.939693, 0, 1.7101, 0, 1, 0, -0.34202, 0, 4.69846, -1, 0, 0)
+mesh = SubResource("BoxMesh_6j7xj")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_852v8")
+
+[node name="LeftThruster" parent="." instance=ExtResource("5_olh5i")]
+transform = Transform3D(-0.34202, 0, -0.939693, 0, 1, 0, 0.939693, 0, -0.34202, 1.5, 0, 0)
+
+[node name="RearThruster1" parent="." instance=ExtResource("5_olh5i")]
+transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 1.8, 0, -2.4)
+
+[node name="RearThruster2" parent="." instance=ExtResource("5_olh5i")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -1.8, 0, -2.4)
+
+[node name="RightThruster" parent="." instance=ExtResource("5_olh5i")]
+transform = Transform3D(-0.34202, 0, 0.939692, 0, 1, 0, -0.939692, 0, -0.34202, -1.5, 0, 0)

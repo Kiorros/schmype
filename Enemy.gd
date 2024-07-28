@@ -1,4 +1,5 @@
 extends Area3D
+class_name Enemy
 
 func _ready():
 	#$Health.damage_taken.connect(func(amount): print("Enemy took " + str(amount) + " damage!"))

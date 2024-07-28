@@ -10,3 +10,6 @@ func _ready():
 
 func _on_parent_health_zero():
 	on_destroyed.emit()
+	#TODO: Make this configurable
+	SoundManager.play_explosion()
+	get_parent().queue_free()

@@ -70,12 +70,11 @@ func _on_player_damage_taken(amount, source):
 	health_bar.value = $Player/Health.value
 	
 	# If the player is collided with, also destroy the source
-	print("Player dealt " + str(amount) + " damage by " + source.name)
-	print(source.has_node("Health"))
+	#print("Player dealt " + str(amount) + " damage by " + source.name)
 	if source.has_node("Health"):
 		source.get_node("Health").damage(9999999, $Player)
 	
-func _on_player_destroyed():
+func _on_health_health_zero():
 	SoundManager.play_explosion()
 	var game_over = load("res://GameOver.tscn").instantiate()
 	add_child(game_over)
