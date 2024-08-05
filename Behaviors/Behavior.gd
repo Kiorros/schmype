@@ -6,6 +6,15 @@ class_name Behavior
 # Track position delta so we van get velocity while tweening for movement
 #@onready var last_position: Vector3 = get_parent().position
 
+func start():
+	pass
+
+func pause():
+	pass
+
+func resume():
+	pass
+	
 func set_stage(stage: BaseStage):
 	self.stage = stage
 

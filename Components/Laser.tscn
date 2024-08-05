@@ -1,0 +1,71 @@
+[gd_scene load_steps=14 format=3 uid="uid://dofvxfo0ketoe"]
+
+[ext_resource type="Script" path="res://Components/Laser.gd" id="1_6mtmf"]
+[ext_resource type="Script" path="res://Damage.gd" id="1_6uo4h"]
+[ext_resource type="AudioStream" uid="uid://bynn8adu74e6s" path="res://Sounds/BigLaserHit.wav" id="3_3tydt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lg27y"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wvwly"]
+material = SubResource("StandardMaterial3D_lg27y")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f1j6q"]
+
+[sub_resource type="Gradient" id="Gradient_4wrvb"]
+offsets = PackedFloat32Array(0, 0.813492, 1)
+colors = PackedColorArray(0.894118, 0.172549, 0, 1, 0.920588, 0.379412, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wykfk"]
+gradient = SubResource("Gradient_4wrvb")
+
+[sub_resource type="Curve" id="Curve_v8a0j"]
+min_value = 0.1
+max_value = 0.25
+_data = [Vector2(0, 0.253644), 0.0, 0.0, 0, 0, Vector2(1, 0.0998544), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rc12e"]
+curve = SubResource("Curve_v8a0j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_76ssp"]
+direction = Vector3(0, 0, 1)
+spread = 180.0
+initial_velocity_min = 6.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_rc12e")
+color_ramp = SubResource("GradientTexture1D_wykfk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5vaeg"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ou6qp"]
+material = SubResource("StandardMaterial3D_5vaeg")
+
+[node name="Laser" type="Area3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_6mtmf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 1)
+mesh = SubResource("CylinderMesh_wvwly")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 1)
+shape = SubResource("CylinderShape3D_f1j6q")
+
+[node name="Damage" type="Node" parent="."]
+script = ExtResource("1_6uo4h")
+
+[node name="HitParticles" type="GPUParticles3D" parent="."]
+amount = 12
+lifetime = 0.15
+process_material = SubResource("ParticleProcessMaterial_76ssp")
+draw_pass_1 = SubResource("BoxMesh_ou6qp")
+
+[node name="DamageSoundPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_3tydt")

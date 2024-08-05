@@ -41,9 +41,11 @@ func spawn_boss():
 	var enemy = boss_scene.instantiate()
 	enemy.get_node("Behavior").set_stage(self)
 	add_child(enemy)
+	enemy.get_node("Behavior").start()
 
 func spawn_enemy(col: int):
 	var enemy = dive_bomber_scene.instantiate()
 	enemy.get_node("Behavior").column = col
 	enemy.get_node("Behavior").set_stage(self)
 	add_child(enemy)
+	enemy.get_node("Behavior").start()

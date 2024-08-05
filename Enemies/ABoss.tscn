@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2vv8svjtfij5"]
+[gd_scene load_steps=15 format=3 uid="uid://d2vv8svjtfij5"]
 
 [ext_resource type="Script" path="res://Health.gd" id="1_7tln2"]
 [ext_resource type="Script" path="res://Damage.gd" id="2_npx68"]
 [ext_resource type="Script" path="res://Destructible.gd" id="3_3irgk"]
 [ext_resource type="Script" path="res://Behaviors/Special/ABoss.gd" id="4_q74di"]
 [ext_resource type="PackedScene" uid="uid://cwfhbtqhc81mj" path="res://Components/Thruster.tscn" id="5_olh5i"]
+[ext_resource type="AudioStream" uid="uid://cvsqy7y3g4vm" path="res://Sounds/BigLaser.wav" id="6_wi0kr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w4to1"]
 size = Vector3(1, 1, 5)
@@ -12,9 +13,21 @@ size = Vector3(1, 1, 5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_fmurk"]
 size = Vector3(1, 1, 5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_da6tn"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_twcuq"]
+material = SubResource("StandardMaterial3D_da6tn")
+
 [sub_resource type="BoxMesh" id="BoxMesh_6j7xj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_852v8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7dhy"]
+albedo_color = Color(0, 0.364706, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_mjvo3"]
+material = SubResource("StandardMaterial3D_h7dhy")
 
 [node name="ABoss" type="Area3D"]
 
@@ -37,6 +50,10 @@ shape = SubResource("BoxShape3D_w4to1")
 [node name="CollisionShapeRight" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -1, 0, 0)
 shape = SubResource("BoxShape3D_fmurk")
+
+[node name="LaserBuildup" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2.39471)
+mesh = SubResource("SphereMesh_twcuq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.939693, 0, -1.7101, 0, 1, 0, 0.34202, 0, 4.69846, 1, 0, 0)
@@ -61,3 +78,11 @@ transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -1
 
 [node name="RightThruster" parent="." instance=ExtResource("5_olh5i")]
 transform = Transform3D(-0.34202, 0, 0.939692, 0, 1, 0, -0.939692, 0, -0.34202, -1.5, 0, 0)
+
+[node name="Marker" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_mjvo3")
+
+[node name="LaserSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_wi0kr")

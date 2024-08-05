@@ -4,7 +4,7 @@ class_name DiveBomber
 @export var column: int = 0
 @export var delay: float = 2.0
 
-func _ready():
+func start():
 	var parent = get_parent()
 	parent.position = Vector3(stage.get_x_for_column(column), 0, stage.get_spawn_z())
 	

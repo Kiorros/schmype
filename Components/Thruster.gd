@@ -12,8 +12,14 @@ func get_vector() -> Vector3:
 	return (Vector3(0, 0, -1) * global_transform).normalized()
 
 func set_thrust_vector(vector: Vector3):
+	for child in get_children():
+		if child is Thruster:
+			child.set_thrust(vector)
 	set_thrust(get_vector().dot(vector))
 
 func set_thrust(value: float):
 	$GPUParticles3D.amount_ratio = clamp(value, 0.0, 1.0) 
 	#$MeshInstance3D.scale = Vector3.ONE * clamp(value, 0.0, 1.0) 
+	$ThrusterAudioPlayer.playing = value > 0
+	$ThrusterAudioPlayer.volume_db = -5 + (1 - value) * -12
+		
